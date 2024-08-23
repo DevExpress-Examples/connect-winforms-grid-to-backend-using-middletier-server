@@ -7,7 +7,7 @@
 
 # Connect the DevExpress WinForms Data Grid to a Backend using a Middle Tier Server (EF Core without OData)
 
-This example uses the [Middle Tier Server](https://docs.devexpress.com/eXpressAppFramework/404398/data-security-and-safety/security-system/security-tiers/middle-tier-security-ef-core/connect-to-the-efcore-middle-tier-service-from-non-xaf-applications) that ships as part of the [DevExpress Cross-Platform .NET App UI](https://www.devexpress.com/products/net/application_framework/) to securely communicate with a backend. By using a middle tire server, you can reduce security-related risks associated with direct database connections. When a middle tier is used, desktop UI clients cannot access database connection information or modify database tables directly (middleware can prevent SQL injection and other database-related threat vectors).
+This example uses the [Middle Tier Server](https://docs.devexpress.com/eXpressAppFramework/404398/data-security-and-safety/security-system/security-tiers/middle-tier-security-ef-core/connect-to-the-efcore-middle-tier-service-from-non-xaf-applications) that ships as part of the [DevExpress XAF (Cross-Platform .NET App UI)](https://www.devexpress.com/products/net/application_framework/) to securely communicate with a backend. By using a middle tire server, you can reduce security-related risks associated with direct database connections. When a middle tier is used, desktop UI clients cannot access database connection information or modify database tables directly (middleware can prevent SQL injection and other database-related threat vectors).
 
 EF Core developers can retain their standard DbContext and initiate remote and secure connections to a database from a .NET client. Our Middle Tier solution "replaces" direct database connections with middleware. Once implemented only authorized users can access specific/sensitive data or perform specific actions. This implementation also helps reduce code duplication, as the same logic can be reused by multiple clients.
 
@@ -15,7 +15,7 @@ The example in this repository demonstrates the following:
 
 1. How to build a data model for application business entities and security policies with EF Core.
 2. How to use the DevExpress ASP.ENT Core Middle Tier Security Server to connect a Windows Forms .NET 8 client application to a backend.
-3. How to define access permissions and activate authentication/authorization for a.NET 8 WinForms app.
+3. How to define access permissions and activate authentication/authorization for a .NET 8 WinForms app.
 4. How to create a login form.
 5. How to customize UI/UX for a given user based on associated access permissions.
 6. How to create an edit form to modify and save data (CRUD).
