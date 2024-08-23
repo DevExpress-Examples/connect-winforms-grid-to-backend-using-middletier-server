@@ -38,6 +38,8 @@ The example in this repository demonstrates the following:
 4. Run the *WinForms.Client* project. Right-click WinForms.Client in the Solution Explorer and select **Debug** | **Start New Instance** in the menu.
 5. Click "Log in" to proceed. The password for Admin and User accounts is an empty string. You can sort, filter, and group grid rows (records) as needed. Double-click a grid row to open the edit form and modify cell values.
 
+![WinForms UI Client](winforms-ui-client-user-admin-roles.png)
+
 ## Implementation Details
 
 ### Initialization and Authentication
