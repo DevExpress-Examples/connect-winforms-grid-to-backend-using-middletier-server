@@ -8,7 +8,6 @@ Namespace MiddleTier.Server.JWT
 
     <ApiController>
     <Route("api/[controller]")>
-    ' This is a JWT authentication service sample.
     Public Class AuthenticationController
         Inherits ControllerBase
 

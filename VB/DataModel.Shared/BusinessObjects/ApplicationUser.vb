@@ -1,3 +1,4 @@
+Imports System.Collections.ObjectModel
 Imports System.ComponentModel
 Imports DevExpress.ExpressApp
 Imports DevExpress.ExpressApp.Security
@@ -8,26 +9,29 @@ Namespace DataModel.Shared.BusinessObjects
     <DefaultProperty(NameOf(PermissionPolicyUser.UserName))>
     Public Class ApplicationUser
         Inherits PermissionPolicyUser
-        Implements ISecurityUserWithLoginInfo, ISecurityUserLockout
+        Implements ISecurityUserWithLoginInfo
+        Implements ISecurityUserLockout
 
         <Browsable(False)>
         Public Overridable Property AccessFailedCount As Integer Implements ISecurityUserLockout.AccessFailedCount
 
         <Browsable(False)>
-        Public Overridable Property LockoutEnd As DateTime
+        Private Property LockoutEnd() As DateTime Implements ISecurityUserLockout.LockoutEnd
 
         <Browsable(False)>
-        <DC.Aggregated>
+        <DevExpress.ExpressApp.DC.Aggregated>
         Public Overridable Property UserLogins As IList(Of ApplicationUserLoginInfo) = New ObservableCollection(Of ApplicationUserLoginInfo)()
 
-        Private ReadOnly Property UserLogins As IEnumerable(Of ISecurityUserLoginInfo)
+        Public ReadOnly Property IOAuthSecurityUser_UserLogins As IEnumerable(Of ISecurityUserLoginInfo) _
+    Implements IOAuthSecurityUser.UserLogins
             Get
-                Return Me.UserLogins.OfType(Of ISecurityUserLoginInfo)()
+                Return UserLogins.OfType(Of ISecurityUserLoginInfo)()
             End Get
         End Property
 
-        Private Function CreateUserLoginInfo(ByVal loginProviderName As String, ByVal providerUserKey As String) As ISecurityUserLoginInfo Implements ISecurityUserWithLoginInfo.CreateUserLoginInfo
-            Dim result As ApplicationUserLoginInfo = CType(Me, IObjectSpaceLink).ObjectSpace.CreateObject(Of ApplicationUserLoginInfo)()
+        Public Function ISecurityUserWithLoginInfo_CreateUserLoginInfo(loginProviderName As String, providerUserKey As String) As ISecurityUserLoginInfo _
+        Implements ISecurityUserWithLoginInfo.CreateUserLoginInfo
+            Dim result As ApplicationUserLoginInfo = DirectCast(CType(Me, IObjectSpaceLink).ObjectSpace.CreateObject(Of ApplicationUserLoginInfo)(), ApplicationUserLoginInfo)
             result.LoginProviderName = loginProviderName
             result.ProviderUserKey = providerUserKey
             result.UserProp = Me

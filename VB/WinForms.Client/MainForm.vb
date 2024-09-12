@@ -1,18 +1,20 @@
 Imports DataModel.Shared.BusinessObjects
+Imports DataModel.Shared.DataModel.Shared.BusinessObjects
 Imports DevExpress.Data.Linq
 Imports DevExpress.ExpressApp.Security
 Imports DevExpress.XtraBars
 Imports DevExpress.XtraEditors
 Imports DevExpress.XtraGrid
+Imports Microsoft.EntityFrameworkCore
 
 Namespace WinForms.Client
 
-    Public Partial Class MainForm
+    Partial Public Class MainForm
         Inherits Ribbon.RibbonForm
 
         Private serverModeSource As EntityServerModeSource = New EntityServerModeSource()
 
-        Private dbContext As DataModel.Shared.BusinessObjects.DXApplication1EFCoreDbContext = Nothing
+        Private dbContext As DXApplication1EFCoreDbContext = Nothing
 
         Public Sub New()
             InitializeComponent()
@@ -23,15 +25,15 @@ Namespace WinForms.Client
             AddHandler gridView.EditFormShowing, AddressOf GridView_EditFormShowing
             gridView.OptionsSelection.EnableAppearanceFocusedCell = False
             gridView.FocusRectStyle = Views.Grid.DrawFocusRectStyle.RowFocus
-            bbiNew.Enabled = RemoteContextUtils.IsGranded(GetType(DataModel.[Shared].BusinessObjects.Employee), SecurityOperations.Create)
-            bbiDelete.Enabled = RemoteContextUtils.IsGranded(GetType(DataModel.[Shared].BusinessObjects.Employee), SecurityOperations.Delete)
-            bbiEdit.Enabled = RemoteContextUtils.IsGranded(GetType(DataModel.[Shared].BusinessObjects.Employee), SecurityOperations.Write)
+            bbiNew.Enabled = RemoteContextUtils.IsGranded(GetType(Employee), SecurityOperations.Create)
+            bbiDelete.Enabled = RemoteContextUtils.IsGranded(GetType(Employee), SecurityOperations.Delete)
+            bbiEdit.Enabled = RemoteContextUtils.IsGranded(GetType(Employee), SecurityOperations.Write)
         End Sub
 
         Private Sub SetUpBinding()
             dbContext?.Dispose()
             dbContext = RemoteContextUtils.GetDBContext()
-            serverModeSource = New EntityServerModeSource() With {.ElementType = GetType(DataModel.[Shared].BusinessObjects.Employee), .KeyExpression = "ID"}
+            serverModeSource = New EntityServerModeSource() With {.ElementType = GetType(Employee), .KeyExpression = "ID"}
             serverModeSource.QueryableSource = dbContext.Employees
             gridControl.DataSource = serverModeSource
         End Sub
@@ -50,10 +52,10 @@ Namespace WinForms.Client
 
         Private Sub GridView_EditFormShowing(ByVal sender As Object, ByVal e As Views.Grid.EditFormShowingEventArgs)
             e.Allow = False
-            Dim employee As DataModel.[Shared].BusinessObjects.Employee = Nothing
-            If CSharpImpl.__Assign(employee, TryCast(gridView.GetRow(e.RowHandle), DataModel.[Shared].BusinessObjects.Employee)) IsNot Nothing Then
+            Dim employee As Employee = Nothing
+            If CSharpImpl.__Assign(employee, TryCast(gridView.GetRow(e.RowHandle), Employee)) IsNot Nothing Then
                 Using editForm = New EditForm(employee)
-                    If(editForm.ShowDialog() Is DialogResult.OK) AndAlso RemoteContextUtils.IsGranded(GetType(DataModel.[Shared].BusinessObjects.Employee), SecurityOperations.Write) Then
+                    If (editForm.ShowDialog() = DialogResult.OK) AndAlso RemoteContextUtils.IsGranded(GetType(Employee), SecurityOperations.Write) Then
                         Try
                             Dim newObj = editForm.GetEmployee()
                             Dim contextObj = dbContext.Employees.First(Function(n) n.ID = newObj.ID)
@@ -69,18 +71,18 @@ Namespace WinForms.Client
         End Sub
 
         Private Sub bbiNew_ItemClick(ByVal sender As Object, ByVal e As ItemClickEventArgs)
-            Dim employee As DataModel.[Shared].BusinessObjects.Employee = New DataModel.[Shared].BusinessObjects.Employee()
+            Dim employee As New Employee()
             Using editForm = New EditForm(employee)
                 Try
-                    If editForm.ShowDialog() Is DialogResult.OK Then
+                    If editForm.ShowDialog() = DialogResult.OK Then
                         Dim newObj = editForm.GetEmployee()
-                        Dim contextObj = dbContext.CreateProxy(Of DataModel.[Shared].BusinessObjects.Employee)()
+                        Dim contextObj = dbContext.CreateProxy(Of Employee)()
                         dbContext.Employees.Add(contextObj)
                         newObj.CopyToContextObject(contextObj, dbContext)
                         dbContext.SaveChanges()
                         RefreshData()
                     End If
-                Catch __unusedSecurityException1__ As System.Security.SecurityException
+                Catch e1 As System.Security.SecurityException
                     XtraMessageBox.Show("Adding a new item is restricted for security reasons.")
                 End Try
             End Using
@@ -96,8 +98,8 @@ Namespace WinForms.Client
 
         Private Sub bbiDelete_ItemClick(ByVal sender As Object, ByVal e As ItemClickEventArgs)
             Dim selectedRowHandles As Integer() = gridView.GetSelectedRows()
-            Dim employee As DataModel.[Shared].BusinessObjects.Employee = Nothing
-            If selectedRowHandles.Length = 1 AndAlso (CSharpImpl.__Assign(employee, TryCast(gridView.GetRow(selectedRowHandles(0)), DataModel.[Shared].BusinessObjects.Employee)) IsNot Nothing) Then
+            Dim employee As Employee = Nothing
+            If selectedRowHandles.Length = 1 AndAlso (CSharpImpl.__Assign(employee, TryCast(gridView.GetRow(selectedRowHandles(0)), Employee)) IsNot Nothing) Then
                 Try
                     dbContext.Employees.Remove(employee)
                     dbContext.SaveChanges()

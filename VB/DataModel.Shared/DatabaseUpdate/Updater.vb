@@ -1,9 +1,14 @@
+Imports Aqua.EnumerableExtensions
+Imports System.Data
+Imports System.IO
 Imports DataModel.Shared.BusinessObjects
+Imports DataModel.Shared.DataModel.Shared.BusinessObjects
 Imports DevExpress.ExpressApp
 Imports DevExpress.ExpressApp.Security
 Imports DevExpress.ExpressApp.Updating
 Imports DevExpress.Persistent.Base
 Imports DevExpress.Persistent.BaseImpl.EF.PermissionPolicy
+Imports Microsoft.Extensions.DependencyInjection
 
 Namespace DataModel.Shared.DatabaseUpdate
 
@@ -31,16 +36,15 @@ Namespace DataModel.Shared.DatabaseUpdate
         End Sub
 
         Private Sub CreateUser()
-            Dim userManager As UserManager = Me.ObjectSpace.ServiceProvider.GetRequiredService(Of UserManager)()
+            Dim userManager As UserManager = ObjectSpace.ServiceProvider.GetRequiredService(Of UserManager)()
             ' If a user named 'User' doesn't exist in the database, create this user
-            If userManager.FindUserByName(Of ApplicationUser)(Me.ObjectSpace, DefaultUserName) Is Nothing Then
+            If userManager.FindUserByName(Of ApplicationUser)(ObjectSpace, DefaultUserName) Is Nothing Then
                 ' Set a password if the standard authentication type is used
                 Dim EmptyPassword As String = ""
-                __ = userManager.CreateUser(Of ApplicationUser)(Me.ObjectSpace, DefaultUserName, EmptyPassword, Function(user)
-                    ' Add the Users role to the user
-                    user.Roles.Add(GetUserRole())
-                End Function)
-                Me.ObjectSpace.CommitChanges()
+                Dim result = userManager.CreateUser(Of ApplicationUser)(ObjectSpace, DefaultUserName, EmptyPassword, Sub(user)
+                                                                                                                         user.Roles.Add(GetUserRole())
+                                                                                                                     End Sub)
+                ObjectSpace.CommitChanges()
             End If
         End Sub
 
@@ -50,14 +54,13 @@ Namespace DataModel.Shared.DatabaseUpdate
             If userManager.FindUserByName(Of ApplicationUser)(Me.ObjectSpace, AdministratorUserName) Is Nothing Then
                 ' Set a password if the standard authentication type is used
                 Dim EmptyPassword As String = ""
-                __ = userManager.CreateUser(Of ApplicationUser)(Me.ObjectSpace, AdministratorUserName, EmptyPassword, Function(user)
-                    ' Add the Administrators role to the user
-                    user.Roles.Add(GetAdminRole())
-                End Function)
+                Dim result = userManager.CreateUser(Of ApplicationUser)(Me.ObjectSpace, AdministratorUserName, EmptyPassword, Function(user)
+                                                                                                                                  ' Add the Administrators role to the user
+                                                                                                                                  user.Roles.Add(GetAdminRole())
+                                                                                                                              End Function)
                 Me.ObjectSpace.CommitChanges()
             End If
         End Sub
-
         Private Function GetAdminRole() As PermissionPolicyRole
             Dim adminRole As PermissionPolicyRole = Me.ObjectSpace.FirstOrDefault(Of PermissionPolicyRole)(Function(u) Equals(u.Name, AdministratorRoleName))
             If adminRole Is Nothing Then
@@ -77,7 +80,7 @@ Namespace DataModel.Shared.DatabaseUpdate
                 userRole.AddTypePermission(Of Employee)(SecurityOperations.Read, SecurityPermissionState.Allow)
                 ' Users have only read-only access to Employee records.
                 userRole.AddTypePermission(Of Employee)(SecurityOperations.Write, SecurityPermissionState.Deny)
-            ' For more information on criteria language syntax (both string and strongly-typed formats), see https://docs.devexpress.com/CoreLibraries/4928/.
+                ' For more information on criteria language syntax (both string and strongly-typed formats), see https://docs.devexpress.com/CoreLibraries/4928/.
             End If
 
             Return userRole

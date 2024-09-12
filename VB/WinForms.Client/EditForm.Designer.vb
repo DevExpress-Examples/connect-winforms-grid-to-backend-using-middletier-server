@@ -1,3 +1,5 @@
+Imports DataModel.Shared.DataModel.Shared.BusinessObjects
+
 Namespace WinForms.Client
 
     Partial Class EditForm
@@ -91,7 +93,6 @@ Namespace WinForms.Client
             Me.OK_button.StyleController = Me.dataLayoutControl1
             Me.OK_button.TabIndex = 8
             Me.OK_button.Text = "OK"
-            Me.OK_button.Click += AddressOf OK_button_Click
             ' 
             ' dataLayoutControl1
             ' 
@@ -139,7 +140,7 @@ Namespace WinForms.Client
             ' 
             ' employeesBindingSource
             ' 
-            Me.employeesBindingSource.DataSource = GetType(DataModel.[Shared].BusinessObjects.Employee)
+            Me.employeesBindingSource.DataSource = GetType(Employee)
             ' 
             ' LastNameTextEdit
             ' 
@@ -198,7 +199,7 @@ Namespace WinForms.Client
             ' 
             ' departmentsBindingSource
             ' 
-            Me.departmentsBindingSource.DataSource = GetType(DataModel.[Shared].BusinessObjects.Department)
+            Me.departmentsBindingSource.DataSource = GetType(Department)
             ' 
             ' Root
             ' 
@@ -295,11 +296,11 @@ Namespace WinForms.Client
             Me.layoutControlGroup3.Location = New System.Drawing.Point(182, 321)
             Me.layoutControlGroup3.Name = "layoutControlGroup3"
             columnDefinition1.SizeType = System.Windows.Forms.SizeType.AutoSize
-            columnDefinition1.Width = 104R
+            columnDefinition1.Width = 104.0R
             columnDefinition2.SizeType = System.Windows.Forms.SizeType.AutoSize
-            columnDefinition2.Width = 104R
+            columnDefinition2.Width = 104.0R
             Me.layoutControlGroup3.OptionsTableLayoutGroup.ColumnDefinitions.AddRange(New DevExpress.XtraLayout.ColumnDefinition() {columnDefinition1, columnDefinition2})
-            rowDefinition1.Height = 26R
+            rowDefinition1.Height = 26.0R
             rowDefinition1.SizeType = System.Windows.Forms.SizeType.AutoSize
             Me.layoutControlGroup3.OptionsTableLayoutGroup.RowDefinitions.AddRange(New DevExpress.XtraLayout.RowDefinition() {rowDefinition1})
             Me.layoutControlGroup3.Size = New System.Drawing.Size(208, 26)
@@ -334,7 +335,7 @@ Namespace WinForms.Client
             ' 
             ' EditForm
             ' 
-            AutoScaleDimensions = New System.Drawing.SizeF(6F, 13F)
+            AutoScaleDimensions = New System.Drawing.SizeF(6.0F, 13.0F)
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             ClientSize = New System.Drawing.Size(410, 367)
             Controls.Add(Me.dataLayoutControl1)
@@ -370,7 +371,7 @@ Namespace WinForms.Client
         End Sub
 
 #End Region
-        Private OK_button As DevExpress.XtraEditors.SimpleButton
+        WithEvents OK_button As DevExpress.XtraEditors.SimpleButton
 
         Private Cancel_button As DevExpress.XtraEditors.SimpleButton
 

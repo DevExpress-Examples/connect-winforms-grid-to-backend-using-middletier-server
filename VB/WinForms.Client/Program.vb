@@ -1,9 +1,12 @@
 Imports System
+Imports System.Windows.Forms
 Imports DataModel.Shared.BusinessObjects
+Imports DataModel.Shared.DataModel.Shared.BusinessObjects
 Imports DevExpress.ExpressApp.Security.ClientServer.Internal
 Imports DevExpress.LookAndFeel
 Imports DevExpress.XtraEditors
 Imports Microsoft.EntityFrameworkCore
+Imports System.Linq
 
 Namespace WinForms.Client
 
@@ -18,16 +21,16 @@ Namespace WinForms.Client
             WindowsFormsSettings.DefaultLookAndFeel.SetSkinStyle(SkinStyle.WXI)
             Application.EnableVisualStyles()
             Application.SetCompatibleTextRenderingDefault(False)
-            ApplicationConfiguration.Initialize()
+            ' ApplicationConfiguration.Initialize()
             Application.EnableVisualStyles()
             While Not RemoteContextUtils.IsLogin
                 Using authForm As AuthForm = New AuthForm()
-                    If authForm.ShowDialog() Is DialogResult.OK Then
+                    If authForm.ShowDialog() = DialogResult.OK Then
                         MiddleTierStartupHelper.WaitMiddleTierServerReady(MiddleTierStartupHelper.EFCoreWebApiMiddleTierInstanceKey, TimeSpan.MaxValue)
                         ' Perform authorization.
                         Dim securedClient = RemoteContextUtils.CreateSecuredClient(Configuration.ConfigurationManager.AppSettings("endpointUrl"), authForm.Login, authForm.Password)
                         RemoteContextUtils.SecuredDataServerClient = securedClient
-                        Dim options As DbContextOptions(Of DataModel.[Shared].BusinessObjects.DXApplication1EFCoreDbContext) = RemoteContextUtils.CreateDbContextOptions(securedClient)
+                        Dim options As DbContextOptions(Of DXApplication1EFCoreDbContext) = RemoteContextUtils.CreateDbContextOptions(securedClient)
                         RemoteContextUtils.Options = options
                         Application.Run(New MainForm())
                     Else

@@ -1,28 +1,29 @@
 Imports System.Linq
 Imports DataModel.Shared.BusinessObjects
+Imports DataModel.Shared.DataModel.Shared.BusinessObjects
 Imports DevExpress.ExpressApp.Security
 Imports DevExpress.XtraEditors
 
 Namespace WinForms.Client
 
-    Public Partial Class EditForm
+    Partial Public Class EditForm
         Inherits XtraForm
 
-        Private curEmployee As DataModel.Shared.BusinessObjects.Employee
+        Private curEmployee As Employee
 
-        Private departments As DataModel.Shared.BusinessObjects.Department() = Nothing
+        Private departments As Department() = Nothing
 
         Private Sub New()
             InitializeComponent()
-            If Not RemoteContextUtils.IsGranded(GetType(DataModel.[Shared].BusinessObjects.Employee), SecurityOperations.Write) Then
+            If Not RemoteContextUtils.IsGranded(GetType(Employee), SecurityOperations.Write) Then
                 Me.dataLayoutControl1.OptionsView.IsReadOnly = DevExpress.Utils.DefaultBoolean.[True]
                 Me.Text += " (Read-Only)"
             End If
         End Sub
 
-        Public Sub New(ByVal employee As DataModel.Shared.BusinessObjects.Employee)
+        Public Sub New(ByVal employee As Employee)
             Me.New()
-            Using dbContext As DataModel.[Shared].BusinessObjects.DXApplication1EFCoreDbContext = RemoteContextUtils.GetDBContext()
+            Using dbContext As DXApplication1EFCoreDbContext = RemoteContextUtils.GetDBContext()
                 departments = dbContext.Departments.ToArray()
             End Using
 
@@ -31,8 +32,8 @@ Namespace WinForms.Client
             employeesBindingSource.Add(curEmployee)
         End Sub
 
-        Private Sub SetEmployee(ByVal employee As DataModel.Shared.BusinessObjects.Employee)
-            curEmployee = New DataModel.[Shared].BusinessObjects.Employee()
+        Private Sub SetEmployee(ByVal employee As Employee)
+            curEmployee = New Employee()
             curEmployee.Birthday = employee.Birthday
             curEmployee.ID = employee.ID
             curEmployee.FirstName = employee.FirstName
