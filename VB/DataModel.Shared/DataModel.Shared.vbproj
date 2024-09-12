@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+    <TargetFramework>net8.0</TargetFramework>
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <Deterministic>false</Deterministic>
+    <AssemblyVersion>1.0.*</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Configurations>Debug;Release;EasyTest</Configurations>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Employees.xml" />
+    <None Remove="Model.DesignedDiffs.xafml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Employees.xml" />
+    <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="DevExpress.ExpressApp" Version="24.1.5" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="24.1.5" />
+    <PackageReference Include="DevExpress.ExpressApp.ConditionalAppearance" Version="24.1.5" />
+    <PackageReference Include="DevExpress.ExpressApp.EFCore" Version="24.1.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Objects" Version="24.1.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Security" Version="24.1.5" />
+    <PackageReference Include="DevExpress.ExpressApp.Validation" Version="24.1.5" />
+    <PackageReference Include="DevExpress.Persistent.Base" Version="24.1.5" />
+    <PackageReference Include="DevExpress.Persistent.BaseImpl.EFCore" Version="24.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.6" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.3" />
+    <PackageReference Include="Azure.Identity" Version="1.11.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.34.0" />
+  </ItemGroup>
+</Project>
