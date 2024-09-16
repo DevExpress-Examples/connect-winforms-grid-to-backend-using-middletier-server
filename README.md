@@ -179,9 +179,9 @@ public MainForm() {
     InitializeComponent();
     SetUpBinding();
 
-    bbiNew.Enabled = RemoteContextUtils.IsGranded(typeof(Employee), SecurityOperations.Create);
-    bbiDelete.Enabled = RemoteContextUtils.IsGranded(typeof(Employee), SecurityOperations.Delete);
-    bbiEdit.Enabled = RemoteContextUtils.IsGranded(typeof(Employee), SecurityOperations.Write);
+    bbiNew.Enabled = RemoteContextUtils.IsGranted(typeof(Employee), SecurityOperations.Create);
+    bbiDelete.Enabled = RemoteContextUtils.IsGranted(typeof(Employee), SecurityOperations.Delete);
+    bbiEdit.Enabled = RemoteContextUtils.IsGranted(typeof(Employee), SecurityOperations.Write);
 }
 ```
 
