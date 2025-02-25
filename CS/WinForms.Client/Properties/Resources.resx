@@ -119,6 +119,6 @@
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Action_Logoff" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Action_Logoff.svg;DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.1, Version=24.1.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+    <value>..\Action_Logoff.svg;DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v25.1, Version=25.1.2-pre-25056.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
 </root>
