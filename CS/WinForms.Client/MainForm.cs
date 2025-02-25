@@ -1,7 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using DataModel.Shared.BusinessObjects;
 using DevExpress.Data.Linq;
+using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.ApplicationBuilder;
 using DevExpress.ExpressApp.Security;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
@@ -10,9 +13,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WinForms.Client {
     public partial class MainForm : DevExpress.XtraBars.Ribbon.RibbonForm {
+        readonly IMiddleTierClient<DXApplication1EFCoreDbContext> middleTierClient;
         EntityServerModeSource serverModeSource = new EntityServerModeSource();
         DXApplication1EFCoreDbContext dbContext = null;
-        public MainForm() {
+        IObjectSpace securedObjectSpace;
+        public MainForm(IMiddleTierClient<DXApplication1EFCoreDbContext> middleTierClient) {
+            this.middleTierClient = middleTierClient;
             InitializeComponent();
             SetUpBinding();
 
@@ -25,15 +31,22 @@ namespace WinForms.Client {
             gridView.OptionsSelection.EnableAppearanceFocusedCell = false;
             gridView.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
 
-            this.bbiNew.Enabled = RemoteContextUtils.IsGranded(typeof(Employee), SecurityOperations.Create);
-            this.bbiDelete.Enabled = RemoteContextUtils.IsGranded(typeof(Employee), SecurityOperations.Delete);
-            this.bbiEdit.Enabled = RemoteContextUtils.IsGranded(typeof(Employee), SecurityOperations.Write);
+            this.securedObjectSpace = middleTierClient.CreateObjectSpace();
+            this.bbiNew.Enabled = middleTierClient.Security.CanCreate<Employee>(securedObjectSpace);
+            this.bbiDelete.Enabled = middleTierClient.Security.CanDelete<Employee>(securedObjectSpace);
+            this.bbiEdit.Enabled = middleTierClient.Security.CanWrite<Employee>(securedObjectSpace);
+
+            this.Disposed += MainForm_Disposed;
+        }
+
+        private void MainForm_Disposed(object sender, EventArgs e) {
+            securedObjectSpace.Dispose();
         }
 
         void SetUpBinding() {
             dbContext?.Dispose();
 
-            dbContext = RemoteContextUtils.GetDBContext();
+            dbContext = middleTierClient.CreateDbContext();
 
             serverModeSource = new EntityServerModeSource() { ElementType = typeof(Employee), KeyExpression = "ID" };
             serverModeSource.QueryableSource = dbContext.Employees;
@@ -56,8 +69,8 @@ namespace WinForms.Client {
             e.Allow = false;
 
             if(gridView.GetRow(e.RowHandle) is Employee employee) {
-                using(var editForm = new EditForm(employee)) {
-                    if((editForm.ShowDialog() == DialogResult.OK) && (RemoteContextUtils.IsGranded(typeof(Employee), SecurityOperations.Write)))
+                using(var editForm = new EditForm(employee, middleTierClient)) {
+                    if((editForm.ShowDialog() == DialogResult.OK) && (middleTierClient.Security.CanWrite<Employee>(securedObjectSpace)))
                         try {
                             var newObj = editForm.GetEmployee();
                             var contextObj = dbContext.Employees.First(n => n.ID == newObj.ID);
@@ -74,7 +87,7 @@ namespace WinForms.Client {
 
         private void bbiNew_ItemClick(object sender, ItemClickEventArgs e) {
             Employee employee = new Employee();
-            using(var editForm = new EditForm(employee)) {
+            using(var editForm = new EditForm(employee, middleTierClient)) {
                 try {
                     if(editForm.ShowDialog() == DialogResult.OK) {
                         var newObj = editForm.GetEmployee();
@@ -114,8 +127,10 @@ namespace WinForms.Client {
         }
 
         private void bbiLogOut_ItemClick(object sender, ItemClickEventArgs e) {
-            RemoteContextUtils.Logoff();
+            IsLogoffExecuted = true;
             this.Close();
         }
+
+        public bool IsLogoffExecuted { get; private set; }
     }
 }

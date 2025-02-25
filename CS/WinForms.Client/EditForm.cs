@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DataModel.Shared.BusinessObjects;
+using DevExpress.ExpressApp;
+using DevExpress.ExpressApp.ApplicationBuilder;
 using DevExpress.ExpressApp.Security;
 using DevExpress.XtraEditors;
 
@@ -7,18 +10,27 @@ namespace WinForms.Client {
     public partial class EditForm : XtraForm {
         Employee curEmployee;
         Department[] departments = null;
+        readonly IMiddleTierClient<DXApplication1EFCoreDbContext> middleTierClient;
+        readonly IObjectSpace securedObjectSpace;
 
-        EditForm() {
+        EditForm(IMiddleTierClient<DXApplication1EFCoreDbContext>middleTierClient) {
             InitializeComponent();
+            this.middleTierClient = middleTierClient;
+            this.securedObjectSpace = middleTierClient.CreateObjectSpace();
 
-            if(!RemoteContextUtils.IsGranded(typeof(Employee), SecurityOperations.Write)) {
+            if(!middleTierClient.Security.CanWrite<Employee>(securedObjectSpace)) {
                 this.dataLayoutControl1.OptionsView.IsReadOnly = DevExpress.Utils.DefaultBoolean.True;
                 this.Text += " (Read-Only)";
             }
+            this.Disposed += EditForm_Disposed;
         }
 
-        public EditForm(Employee employee) : this() {
-            using(DXApplication1EFCoreDbContext dbContext = RemoteContextUtils.GetDBContext()) {
+        private void EditForm_Disposed(object sender, EventArgs e) {
+            securedObjectSpace.Dispose();
+        }
+
+        public EditForm(Employee employee, IMiddleTierClient<DXApplication1EFCoreDbContext> middleTierClient) : this(middleTierClient) {
+            using(DXApplication1EFCoreDbContext dbContext = middleTierClient.CreateDbContext()) {
                 departments = dbContext.Departments.ToArray();
             }
             departmentsBindingSource.DataSource = departments;
