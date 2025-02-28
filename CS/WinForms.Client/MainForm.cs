@@ -17,6 +17,7 @@ namespace WinForms.Client {
         EntityServerModeSource serverModeSource = new EntityServerModeSource();
         DXApplication1EFCoreDbContext dbContext = null;
         IObjectSpace securedObjectSpace;
+        RepositoryItemProtectedContentTextEdit protectedContentTextEdit;
         public MainForm(IMiddleTierClient<DXApplication1EFCoreDbContext> middleTierClient) {
             this.middleTierClient = middleTierClient;
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace WinForms.Client {
 
             gridView.PopupMenuShowing += GridView_PopupMenuShowing;
             gridView.EditFormShowing += GridView_EditFormShowing;
+            gridView.CustomRowCellEdit += GridView_CustomRowCellEdit;
 
             gridView.OptionsSelection.EnableAppearanceFocusedCell = false;
             gridView.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
@@ -37,6 +39,8 @@ namespace WinForms.Client {
             this.bbiEdit.Enabled = middleTierClient.Security.CanWrite<Employee>(securedObjectSpace);
 
             this.Disposed += MainForm_Disposed;
+
+            protectedContentTextEdit = new RepositoryItemProtectedContentTextEdit();
         }
 
         private void MainForm_Disposed(object sender, EventArgs e) {
@@ -82,6 +86,14 @@ namespace WinForms.Client {
                             XtraMessageBox.Show("Modifying this data row is restricted for security reasons.");
                         }
                 }
+            }
+        }
+
+        private void GridView_CustomRowCellEdit(object sender, DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventArgs e) {
+            string fieldName = e.Column.FieldName;
+            object targetObject = gridView.GetRow(e.RowHandle);
+            if(!middleTierClient.Security.CanRead(securedObjectSpace, targetObject, fieldName)) {
+                e.RepositoryItem = protectedContentTextEdit;
             }
         }
 
