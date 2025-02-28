@@ -69,9 +69,17 @@ public class Updater : ModuleUpdater {
         if(userRole == null) {
             userRole = ObjectSpace.CreateObject<PermissionPolicyRole>();
             userRole.Name = DefaultUserRoleName;
+            // Allow users to read departments only if their title contains 'Development'. 
+            const string protectedDepartment = "Development";
+            userRole.AddObjectPermissionFromLambda<Department>(SecurityOperations.Read, t => t.Title.Contains(protectedDepartment), SecurityPermissionState.Allow);
+            userRole.AddTypePermission<Department>(SecurityOperations.Read, SecurityPermissionState.Deny);
+            // Allow users to read and modify employee records and their fields by criteria.
             userRole.AddTypePermission<Employee>(SecurityOperations.Read, SecurityPermissionState.Allow);
-            // Users have only read-only access to Employee records.
-            userRole.AddTypePermission<Employee>(SecurityOperations.Write, SecurityPermissionState.Deny);
+            userRole.AddTypePermission<Employee>(SecurityOperations.Write, SecurityPermissionState.Allow);
+
+            userRole.AddObjectPermissionFromLambda<Employee>(SecurityOperations.Delete, t => t.Department.Title.Contains(protectedDepartment), SecurityPermissionState.Allow);
+            userRole.AddMemberPermissionFromLambda<Employee>(SecurityOperations.Write, nameof(Employee.LastName), t => !t.Department.Title.Contains(protectedDepartment), SecurityPermissionState.Deny);
+            userRole.AddMemberPermissionFromLambda<Employee>(SecurityOperations.Write, nameof(Employee.Department), t => !t.Department.Title.Contains(protectedDepartment), SecurityPermissionState.Deny);
             // For more information on criteria language syntax (both string and strongly-typed formats), see https://docs.devexpress.com/CoreLibraries/4928/.
         }
         return userRole;
