@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Windows.Forms;
 using DataModel.Shared.BusinessObjects;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.ApplicationBuilder;
+using DevExpress.ExpressApp.Editors;
 using DevExpress.ExpressApp.Security;
 using DevExpress.XtraEditors;
+using DevExpress.XtraLayout;
 
 namespace WinForms.Client {
     public partial class EditForm : XtraForm {
@@ -25,6 +28,24 @@ namespace WinForms.Client {
             this.Disposed += EditForm_Disposed;
         }
 
+        private void CheckPermissions() {
+            dataLayoutControl1.BeginUpdate();
+            try {
+                foreach(BaseLayoutItem layoutItem in dataLayoutControl1.Items) {
+                    if((layoutItem is LayoutControlItem layoutControlItem) && (layoutControlItem.Control != null)
+                            && (layoutControlItem.Control.DataBindings.Count > 0)) {
+                        var memberName = layoutControlItem.Control.DataBindings[0].BindingMemberInfo.BindingMember;
+                        if(!middleTierClient.Security.CanRead(securedObjectSpace, curEmployee, memberName)) {
+                            var prevControl = layoutControlItem.Control;
+                            layoutControlItem.Control = new ProtectedContentEdit();
+                            prevControl.Dispose();
+                        }
+                    }
+                }
+            } finally {
+                dataLayoutControl1.EndUpdate();
+            }
+        }
         private void EditForm_Disposed(object sender, EventArgs e) {
             securedObjectSpace.Dispose();
         }
@@ -36,6 +57,7 @@ namespace WinForms.Client {
             departmentsBindingSource.DataSource = departments;
             SetEmployee(employee);
             employeesBindingSource.Add(curEmployee);
+            CheckPermissions();
         }
 
         void SetEmployee(Employee employee) {
@@ -45,9 +67,11 @@ namespace WinForms.Client {
             this.curEmployee.FirstName = employee.FirstName;
             this.curEmployee.LastName = employee.LastName;
             this.curEmployee.Email = employee.Email;
-            if(employee.Department != null)
+            if(employee.Department != null) {
                 curEmployee.Department = departments.First(n => n.ID == employee.Department.ID);
+            }
         }
+
         public Employee GetEmployee() {
             return this.curEmployee;
         }
