@@ -9,6 +9,7 @@ using DevExpress.ExpressApp.Security;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Base;
 using Microsoft.EntityFrameworkCore;
 
 namespace WinForms.Client {
@@ -29,20 +30,25 @@ namespace WinForms.Client {
             gridView.PopupMenuShowing += GridView_PopupMenuShowing;
             gridView.EditFormShowing += GridView_EditFormShowing;
             gridView.CustomRowCellEdit += GridView_CustomRowCellEdit;
+            gridView.FocusedRowObjectChanged += GridView_FocusedRowObjectChanged;
 
             gridView.OptionsSelection.EnableAppearanceFocusedCell = false;
             gridView.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
 
             this.securedObjectSpace = middleTierClient.CreateObjectSpace();
             this.bbiNew.Enabled = middleTierClient.Security.CanCreate<Employee>(securedObjectSpace);
-            this.bbiDelete.Enabled = middleTierClient.Security.CanDelete<Employee>(securedObjectSpace);
             this.bbiEdit.Enabled = middleTierClient.Security.CanWrite<Employee>(securedObjectSpace);
+            UpdateDeleteButton();
 
             this.Disposed += MainForm_Disposed;
 
             protectedContentTextEdit = new RepositoryItemProtectedContentTextEdit();
         }
 
+        private void UpdateDeleteButton() {
+            object targetObject = gridView.GetRow(gridView.FocusedRowHandle);
+            bbiDelete.Enabled = middleTierClient.Security.CanDelete(securedObjectSpace, targetObject);
+        }
         private void MainForm_Disposed(object sender, EventArgs e) {
             securedObjectSpace.Dispose();
         }
@@ -96,6 +102,9 @@ namespace WinForms.Client {
             if((targetObject != null) && !middleTierClient.Security.CanRead(securedObjectSpace, targetObject, fieldName)) {
                 e.RepositoryItem = protectedContentTextEdit;
             }
+        }
+        private void GridView_FocusedRowObjectChanged(object sender, FocusedRowObjectChangedEventArgs e) {
+            UpdateDeleteButton();
         }
 
         private void bbiNew_ItemClick(object sender, ItemClickEventArgs e) {
