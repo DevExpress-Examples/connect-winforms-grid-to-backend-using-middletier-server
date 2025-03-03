@@ -92,7 +92,8 @@ namespace WinForms.Client {
         private void GridView_CustomRowCellEdit(object sender, DevExpress.XtraGrid.Views.Grid.CustomRowCellEditEventArgs e) {
             string fieldName = e.Column.FieldName;
             object targetObject = gridView.GetRow(e.RowHandle);
-            if(!middleTierClient.Security.CanRead(securedObjectSpace, targetObject, fieldName)) {
+            // The targetObject is null for some rows (column header row, auto filter row and others).
+            if((targetObject != null) && !middleTierClient.Security.CanRead(securedObjectSpace, targetObject, fieldName)) {
                 e.RepositoryItem = protectedContentTextEdit;
             }
         }
