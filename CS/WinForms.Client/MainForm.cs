@@ -55,16 +55,16 @@ namespace WinForms.Client {
 
         void SetUpBinding() {
             dbContext?.Dispose();
-
             dbContext = middleTierClient.CreateDbContext();
 
+            serverModeSource?.Dispose();
             serverModeSource = new EntityServerModeSource() { ElementType = typeof(Employee), KeyExpression = "ID" };
             serverModeSource.QueryableSource = dbContext.Employees;
             gridControl.DataSource = serverModeSource;
         }
 
         void RefreshData() {
-            serverModeSource.Reload();
+            SetUpBinding();
         }
 
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e) {
