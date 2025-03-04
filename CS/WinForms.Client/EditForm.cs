@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using DataModel.Shared.BusinessObjects;
 using DevExpress.ExpressApp;
@@ -35,7 +36,11 @@ namespace WinForms.Client {
                     if((layoutItem is LayoutControlItem layoutControlItem) && (layoutControlItem.Control != null)
                             && (layoutControlItem.Control.DataBindings.Count > 0)) {
                         var memberName = layoutControlItem.Control.DataBindings[0].BindingMemberInfo.BindingMember;
-                        if(!middleTierClient.Security.CanRead(securedObjectSpace, curEmployee, memberName)) {
+                        if(middleTierClient.Security.CanRead(securedObjectSpace, curEmployee, memberName)) {
+                            layoutControlItem.Control.Enabled = 
+                                middleTierClient.Security.CanWrite(securedObjectSpace, curEmployee, memberName);
+                        }
+                        else {
                             var prevControl = layoutControlItem.Control;
                             layoutControlItem.Control = new ProtectedContentEdit();
                             prevControl.Dispose();
