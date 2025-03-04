@@ -48,5 +48,6 @@ public class DXApplication1EFCoreDbContext : DbContext {
         modelBuilder.Entity<ApplicationUserLoginInfo>(b => {
             b.HasIndex(nameof(DevExpress.ExpressApp.Security.ISecurityUserLoginInfo.LoginProviderName), nameof(DevExpress.ExpressApp.Security.ISecurityUserLoginInfo.ProviderUserKey)).IsUnique();
         });
+        modelBuilder.UseDeferredDeletion(this);
     }
 }
