@@ -60,7 +60,10 @@ namespace WinForms.Client {
             serverModeSource?.Dispose();
             serverModeSource = new EntityServerModeSource() { ElementType = typeof(Employee), KeyExpression = "ID" };
             serverModeSource.QueryableSource = dbContext.Employees;
+
+            int rowHandle = gridView.FocusedRowHandle;
             gridControl.DataSource = serverModeSource;
+            gridView.FocusedRowHandle = rowHandle;
         }
 
         void RefreshData() {
