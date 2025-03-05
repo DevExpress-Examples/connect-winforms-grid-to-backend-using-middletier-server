@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.Win.Design" Version="25.1.2-pre-25056" />
+    <PackageReference Include="DevExpress.Win.Design" Version="25.1.2-pre-25064" />
   </ItemGroup>
 
   <ItemGroup>
