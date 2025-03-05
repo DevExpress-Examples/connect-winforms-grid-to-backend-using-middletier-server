@@ -47,7 +47,7 @@ namespace WinForms.Client {
 
         private void UpdateDeleteButton() {
             object targetObject = gridView.GetRow(gridView.FocusedRowHandle);
-            bbiDelete.Enabled = middleTierClient.Security.CanDelete(securedObjectSpace, targetObject);
+            bbiDelete.Enabled = targetObject != null && middleTierClient.Security.CanDelete(securedObjectSpace, targetObject);
         }
         private void MainForm_Disposed(object sender, EventArgs e) {
             securedObjectSpace.Dispose();
