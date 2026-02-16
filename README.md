@@ -192,7 +192,7 @@ public MainForm() {
 * [WinForms — Connect a .NET Desktop Client to a Secure Backend Web API Service (EF Core with OData)](https://community.devexpress.com/blogs/winforms/archive/2024/07/18/winforms-connect-a-net-desktop-client-to-a-secure-backend-with-the-devexpress-web-api-service-ef-core-with-odata.aspx)
 
 <!-- feedback -->
-## Does this example address your development requirements/objectives?
+## Does This Example Address Your Development Requirements/Objectives?
 
 [<img src="https://www.devexpress.com/support/examples/i/yes-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=connect-winforms-grid-to-backend-using-middletier-server&~~~was_helpful=yes) [<img src="https://www.devexpress.com/support/examples/i/no-button.svg"/>](https://www.devexpress.com/support/examples/survey.xml?utm_source=github&utm_campaign=connect-winforms-grid-to-backend-using-middletier-server&~~~was_helpful=no)
 
