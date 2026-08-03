@@ -117,23 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="DevExpress.Data.v24.1" name="DevExpress.Data.v24.1, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-  <data name="bbiLogOut.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v24.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <assembly alias="DevExpress.Data.v25.1" name="DevExpress.Data.v25.1, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+  <data name="bbiLogOut.ImageOptions.SvgImage" type="DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v25.1" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI0LjEsIFZlcnNpb249MjQuMS41
-        LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUBAAAAHURl
-        dkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAAAGECAAAC77u/
-        PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0iMHB4IiB5PSIwcHgi
-        IHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-        MjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3Bh
-        Y2U9InByZXNlcnZlIiBpZD0iTGF5ZXJfMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAg
-        MzIgMzIiPg0KICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLlJlZHtmaWxsOiNEMTFDMUM7fQo8L3N0
-        eWxlPg0KICA8Y2lyY2xlIGN4PSIyMCIgY3k9IjEyIiByPSIyIiBjbGFzcz0iUmVkIiAvPg0KICA8cGF0
-        aCBkPSJNMjksMkgzQzIuNCwyLDIsMi40LDIsM3YyNmMwLDAuNiwwLjQsMSwxLDFoMjZjMC42LDAsMS0w
-        LjQsMS0xVjNDMzAsMi40LDI5LjYsMiwyOSwyeiBNMTksMjAgIGMtMC45LDAtMS43LTAuMi0yLjUtMC41
-        TDE0LDIyaC0ydjJoLTJ2Mkg2di00bDYuNS02LjVDMTIuMiwxNC43LDEyLDEzLjksMTIsMTNjMC0zLjks
-        My4xLTcsNy03czcsMy4xLDcsN0MyNiwxNi45LDIyLjksMjAsMTksMjB6IiBjbGFzcz0iUmVkIiAvPg0K
-        PC9zdmc+Cw==
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFlEZXZFeHByZXNzLkRhdGEudjI1LjEsIFZlcnNpb249MjUu
+        MS41LjAsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjg4ZDE3NTRkNzAwZTQ5YQUB
+        AAAAHURldkV4cHJlc3MuVXRpbHMuU3ZnLlN2Z0ltYWdlAQAAAAREYXRhBwICAAAACQMAAAAPAwAA
+        AGECAAAC77u/PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4NCjxzdmcgeD0i
+        MHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAzMiAzMiIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0
+        cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8x
+        OTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiBpZD0iTGF5ZXJfMSIgc3R5bGU9ImVuYWJs
+        ZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMzIgMzIiPg0KICA8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJ
+        LlJlZHtmaWxsOiNEMTFDMUM7fQo8L3N0eWxlPg0KICA8Y2lyY2xlIGN4PSIyMCIgY3k9IjEyIiBy
+        PSIyIiBjbGFzcz0iUmVkIiAvPg0KICA8cGF0aCBkPSJNMjksMkgzQzIuNCwyLDIsMi40LDIsM3Yy
+        NmMwLDAuNiwwLjQsMSwxLDFoMjZjMC42LDAsMS0wLjQsMS0xVjNDMzAsMi40LDI5LjYsMiwyOSwy
+        eiBNMTksMjAgIGMtMC45LDAtMS43LTAuMi0yLjUtMC41TDE0LDIyaC0ydjJoLTJ2Mkg2di00bDYu
+        NS02LjVDMTIuMiwxNC43LDEyLDEzLjksMTIsMTNjMC0zLjksMy4xLTcsNy03czcsMy4xLDcsN0My
+        NiwxNi45LDIyLjksMjAsMTksMjB6IiBjbGFzcz0iUmVkIiAvPg0KPC9zdmc+Cw==
 </value>
   </data>
 </root>
