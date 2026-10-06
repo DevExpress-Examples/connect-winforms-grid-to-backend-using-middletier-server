@@ -14,16 +14,16 @@ EF Core developers can retain their standard DbContext and initiate remote and s
 The example in this repository demonstrates the following:
 
 1. How to build a data model for application business entities and security policies with EF Core.
-2. How to use the DevExpress ASP.ENT Core Middle Tier Security Server to connect a Windows Forms .NET 8 client application to a backend.
-3. How to define access permissions and activate authentication/authorization for a .NET 8 WinForms app.
+2. How to use the DevExpress ASP.NET Core Middle Tier Security Server to connect a Windows Forms .NET client application to a backend.
+3. How to define access permissions and activate authentication/authorization for a .NET WinForms app.
 4. How to create a login form.
 5. How to customize UI/UX for a given user based on associated access permissions.
 6. How to create an edit form to modify and save data (CRUD).
 
 ## Prerequisites
 
-* [Visual Studio 2022 v17.0+](https://visualstudio.microsoft.com/vs/)
-* [.NET SDK 8.0+](https://dotnet.microsoft.com/en-us/download/dotnet)
+* [Visual Studio IDE](https://visualstudio.microsoft.com/vs/)
+* [.NET SDK](https://dotnet.microsoft.com/en-us/download/dotnet)
 * [Download and run our Unified Component Installer](https://www.devexpress.com/products/try/) or [add NuGet feed URL to Visual Studio](https://docs.devexpress.com/GeneralInformation/116042/installation/install-devexpress-controls-using-nuget-packages/obtain-your-nuget-feed-url) NuGet feeds.
 
 > We recommend that you select all products when you run the DevExpress installer. Doing so will register local NuGet package sources and item/project templates. You can uninstall unnecessary components at a later time.
