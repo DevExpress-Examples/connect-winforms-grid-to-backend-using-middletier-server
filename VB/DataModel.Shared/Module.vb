@@ -15,7 +15,7 @@ Namespace DataModel.Shared
             Me.AdditionalExportedTypes.Add(GetType(DevExpress.Persistent.BaseImpl.EF.PermissionPolicy.PermissionPolicyRole))
             Me.RequiredModuleTypes.Add(GetType(SystemModule.SystemModule))
             Me.RequiredModuleTypes.Add(GetType(Security.SecurityModule))
-            Me.RequiredModuleTypes.Add(GetType(Objects.BusinessClassLibraryCustomizationModule))
+            'Me.RequiredModuleTypes.Add(GetType(Objects.BusinessClassLibraryCustomizationModule)) 'https://devexpress.com/kb=T1312589
             Me.RequiredModuleTypes.Add(GetType(ConditionalAppearance.ConditionalAppearanceModule))
             Me.RequiredModuleTypes.Add(GetType(Validation.ValidationModule))
             Security.SecurityModule.UsedExportedTypes = DevExpress.Persistent.Base.UsedExportedTypes.Custom

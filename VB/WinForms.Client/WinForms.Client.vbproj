@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net10.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
   </PropertyGroup>
@@ -13,7 +13,7 @@
     <EmbeddedResource Include="Action_Logoff.svg" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="DevExpress.Win.Design" Version="24.1.5" />
+    <PackageReference Include="DevExpress.Win.Design" Version="26.1.5" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\DataSources\" />
